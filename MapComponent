@@ -1,18 +1,54 @@
-"use client"; // Important for Next.js 13+
+"use client";
+
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix marker icons
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+});
 
 export default function MapComponent() {
   return (
-    <div style={{ width: "100%", height: "80vh" }}>
-      <iframe
-        title="Shelter Map"
-        width="100%"
-        height="100%"
-        frameBorder="0"
-        style={{ border: 0 }}
-        src="https://maps.google.com/maps?q=shelters%20near%20Baltimore%20MD&t=&z=13&ie=UTF8&iwloc=&output=embed"
-        allowFullScreen
-      ></iframe>
-    </div>
+    <MapContainer
+      center={[39.2904, -76.6122]} // Baltimore center
+      zoom={12}
+      scrollWheelZoom={false}
+      style={{ height: '500px', width: '100%' }}
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="&copy; OpenStreetMap contributors"
+      />
+
+      {/* Shelter 1 */}
+      <Marker position={[39.2965, -76.6218]}>
+        <Popup>
+          Baltimore Homeless Services Center<br />
+          500 Fallsway, Baltimore, MD 21202
+        </Popup>
+      </Marker>
+
+      {/* Shelter 2 */}
+      <Marker position={[39.2946, -76.6157]}>
+        <Popup>
+          House of Ruth Maryland<br />
+          2201 Argonne Dr, Baltimore, MD 21218
+        </Popup>
+      </Marker>
+
+      {/* Shelter 3 */}
+      <Marker position={[39.2896, -76.6095]}>
+        <Popup>
+          Helping Up Mission<br />
+          1029 E Baltimore St, Baltimore, MD 21202
+        </Popup>
+      </Marker>
+
+    </MapContainer>
   );
 }
-M
