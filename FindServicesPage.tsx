@@ -1,37 +1,60 @@
-// FindServicesPage.tsx
+//src/app/find-shelter/FindServicesPage.tsx
 "use client";
 
 import { useState } from 'react';
-import MapComponent from './MapComponent';
-import Navbar from './Navbar';
-import { getServiceInfo } from './genai';
+import MapComponent from '../MapComponent';
+import Navbar from '../Navbar';
+import { getServiceInfo } from '../genai';
 
 export default function FindServicesPage() {
   const [userInput, setUserInput] = useState('');
   const [services, setServices] = useState<any[]>([]);
   const [selectedService, setSelectedService] = useState<any | null>(null);
   const [response, setResponse] = useState(''); // Add this back for API response
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   // Handle chat submission
   const handleChatSubmit = async () => { 
     if (!userInput.trim()) return; // Don't send if the input is empty
     
+    // Set loading state
+    setIsLoading(true);
+    setResponse("Loading...");
+    
     try {
+      console.log("Sending query to gemini-2.0-flash:", userInput);
       const result = await getServiceInfo(userInput);
       
       // Update both services AND response
       if (result) {
         if (result.services) {
+          console.log("Got services:", result.services.length);
           setServices(result.services);
         }
         if (result.text) {
+          console.log("Got response text");
           setResponse(result.text);
         }
+      } else {
+        setResponse("No results found. Please try a different query.");
       }
     } catch (error) {
-      console.error('Error:', error);
-      // Optional: Add a small notification for errors
-      alert("Sorry, I couldn't get the information right now.");
+      console.error('Error in handleChatSubmit:', error);
+      
+      // Handle unknown type error
+      let errorMessage = 'An unknown error occurred';
+      
+      // Check if error is an object with message property
+      if (error && typeof error === 'object' && 'message' in error) {
+        errorMessage = (error as Error).message;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
+      
+      // More informative error message
+      setResponse(`Sorry, I couldn't get the information right now. Error: ${errorMessage}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -67,31 +90,50 @@ export default function FindServicesPage() {
         <div style={{ 
           marginBottom: '30px',
           padding: '15px',
-          backgroundColor: '#f8f9fa',
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          backgroundColor: '#f8f8f8', // Changed to light gray
+          borderRadius: '5px',
+          border: '1px solid #ccc',
+          boxShadow: 'none'
         }}>
-          <h2 style={{ fontSize: '20px', marginBottom: '10px' }}>{selectedService.name}</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          <h2 style={{ 
+            fontSize: '22px', 
+            marginBottom: '15px',
+            color: '#204969', // Darker color for heading
+            fontWeight: '600'
+          }}>{selectedService.name}</h2>
+          
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '1fr 1fr', 
+            gap: '12px',
+            color: '#000000', // Darker text color for better readability
+            fontWeight: '400'
+          }}>
             <div>
-              <p><strong>Type:</strong> {selectedService.type || 'Not specified'}</p>
-              <p><strong>Location:</strong> {selectedService.location || 'Address not available'}</p>
-              <p><strong>Contact:</strong> {selectedService.contact || 'Not available'}</p>
-              {selectedService.hours && <p><strong>Hours:</strong> {selectedService.hours}</p>}
+              <p><strong style={{ color: '#204969' }}>Type:</strong> {selectedService.type || 'Not specified'}</p>
+              <p><strong style={{ color: '#204969' }}>Location:</strong> {selectedService.location || 'Address not available'}</p>
+              <p><strong style={{ color: '#204969' }}>Contact:</strong> {selectedService.contact || 'Not available'}</p>
+              {selectedService.hours && <p><strong style={{ color: '#204969' }}>Hours:</strong> {selectedService.hours}</p>}
             </div>
             <div>
               {selectedService.lowCost !== undefined && 
-                <p><strong>Low Cost:</strong> {selectedService.lowCost ? 'Yes' : 'No'}</p>}
+                <p><strong style={{ color: '#204969' }}>Low Cost:</strong> {selectedService.lowCost ? 'Yes' : 'No'}</p>}
               {selectedService.acceptsInsurance !== undefined && 
-                <p><strong>Accepts Insurance:</strong> {selectedService.acceptsInsurance ? 'Yes' : 'No'}</p>}
+                <p><strong style={{ color: '#204969' }}>Accepts Insurance:</strong> {selectedService.acceptsInsurance ? 'Yes' : 'No'}</p>}
               {selectedService.eligibility && 
-                <p><strong>Eligibility:</strong> {selectedService.eligibility}</p>}
+                <p><strong style={{ color: '#204969' }}>Eligibility:</strong> {selectedService.eligibility}</p>}
             </div>
           </div>
+          
           {selectedService.services && selectedService.services.length > 0 && (
-            <div style={{ marginTop: '10px' }}>
-              <strong>Services:</strong>
-              <ul style={{ marginTop: '5px', paddingLeft: '20px' }}>
+            <div style={{ marginTop: '15px' }}>
+              <strong style={{ color: '#204969' }}>Services:</strong>
+              <ul style={{ 
+                marginTop: '8px', 
+                paddingLeft: '25px',
+                color: '#000000', // Darker text color
+                lineHeight: '1.6' // Slightly increased line height for better readability
+              }}>
                 {selectedService.services.map((service: string, idx: number) => (
                   <li key={idx}>{service}</li>
                 ))}
@@ -115,34 +157,35 @@ export default function FindServicesPage() {
             border: '1px solid #ccc',
             fontFamily: 'inherit',
             fontSize: '16px',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            boxShadow: 'none' // Removed shadow
           }}
         />
         <button 
           onClick={handleChatSubmit}
+          disabled={isLoading}
           style={{
             padding: '14px 28px',
-            backgroundColor: '#4285f4',
+            backgroundColor: isLoading ? '#a0a0a0' : '#4285f4',
             color: 'white',
             border: 'none',
             borderRadius: '8px',
             fontSize: '18px',
             fontWeight: '500',
-            cursor: 'pointer',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+            cursor: isLoading ? 'not-allowed' : 'pointer',
+            boxShadow: 'none', // Removed shadow
             transition: 'all 0.2s ease'
           }}
         >
-          Find Services
+          {isLoading ? 'Searching...' : 'Find Services'}
         </button>
       </div>
 
-      {/* Add back the API response display */}
+      {/* API response display */}
       {response && (
         <div style={{ 
           marginTop: '20px',
           padding: '15px',
-          backgroundColor: '#ffffff',
+          backgroundColor: '#f8f8f8', // Changed to light gray
           borderRadius: '5px',
           width: '100%', 
           minHeight: '120px', 
@@ -156,7 +199,7 @@ export default function FindServicesPage() {
         }}>
           <p style={{ 
             margin: '0',
-            color: '#000000',
+            color: '#000000', // Darker color for better readability
             fontWeight: '400'
           }}>{response}</p>
         </div>
