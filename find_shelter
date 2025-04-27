@@ -1,0 +1,16 @@
+import dynamic from "next/dynamic";
+
+// Dynamically import MapComponent (so it only loads client-side)
+const MapComponent = dynamic(() => import("../../components/MapComponent"), {
+  ssr: false,
+});
+
+export default function FindShelterPage() {
+  return (
+    <div>
+      <h1>Find Shelter</h1>
+      <p>Locate nearby shelters, clinics, and food banks.</p>
+      <MapComponent />
+    </div>
+  );
+}
