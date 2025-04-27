@@ -19,16 +19,9 @@ Before getting started, make sure you have Node.js and npm installed.
 Clone this repository to your local machine.
 
 Navigate to the project folder and run:
-'git status'
-bash
-Copy
-Edit
 npm install
-Once installation is complete, start the development server:
 
-bash
-Copy
-Edit
+Once installation is complete, start the development server:
 npm run dev
 
 # Usage Tips & Known Limitations
