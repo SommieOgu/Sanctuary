@@ -1,0 +1,45 @@
+"use client";
+
+import { useState } from 'react';
+
+export default function ChatInput() {
+  const [message, setMessage] = useState('');
+  const [reply, setReply] = useState('');
+
+  async function sendMessage() {
+    if (!message.trim()) return;
+
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message }),
+    });
+
+    const data = await res.json();
+    setReply(data.reply);
+    setMessage('');
+  }
+
+  return (
+    <div>
+      <h2>Ask Sanctuary AI</h2>
+      <input
+        type="text"
+        placeholder="Type your question..."
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        style={{ width: '300px', padding: '10px', marginRight: '10px' }}
+      />
+      <button onClick={sendMessage} style={{ padding: '10px 20px' }}>
+        Send
+      </button>
+
+      {reply && (
+        <div style={{ marginTop: '20px', background: '#eee', padding: '10px', borderRadius: '5px' }}>
+          <strong>Sanctuary AI says:</strong>
+          <p>{reply}</p>
+        </div>
+      )}
+    </div>
+  );
+}
