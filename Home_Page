@@ -1,5 +1,5 @@
-import Head from 'next/head';
-import styles from './page.module.css'; // if you have other styles
+// src/app/page.tsx
+import styles from './page.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from './Navbar';
@@ -7,13 +7,7 @@ import Navbar from './Navbar';
 export default function Home() {
   return (
     <>
-      <Head>
-        {/* Google Font: Roboto */}
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" 
-          rel="stylesheet" 
-        />
-      </Head>
+      {/* Remove Head component as it's not needed in Next.js App Router */}
       
       <Navbar />
 
@@ -35,9 +29,10 @@ export default function Home() {
 
           {/* Buttons side-by-side */}
           <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'center' }}>
+            {/* Fix the path to match your folder structure */}
             <Link href="/find-shelter" style={{ textDecoration: 'none' }}>
               <button style={{ padding: '1rem 2rem', fontSize: '1rem', cursor: 'pointer' }}>
-                Find Shelter
+                Find Services
               </button>
             </Link>
 
