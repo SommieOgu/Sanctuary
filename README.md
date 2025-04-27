@@ -19,10 +19,10 @@ Before getting started, make sure you have Node.js and npm installed.
 Clone this repository to your local machine.
 
 Navigate to the project folder and run:
-npm install
+**npm install**
 
 Once installation is complete, start the development server:
-npm run dev
+**npm run dev**
 
 # Usage Tips & Known Limitations
 ## Location Services:
