@@ -1,15 +1,54 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import ChatInput from '@/components/ChatInput';
-
+import Head from 'next/head';
+import styles from './page.module.css'; // if you have other styles
+import Image from 'next/image';
+import Link from 'next/link';
+import Navbar from './Navbar';
 
 export default function Home() {
   return (
-    <div style={{ padding: "20px" }}>
-    <h1>Welcome to Sanctuary</h1>
-    <p>Find safety, resources, and help in times of crisis.</p>
+    <>
+      <Head>
+        {/* Google Font: Roboto */}
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" 
+          rel="stylesheet" 
+        />
+      </Head>
+      
+      <Navbar />
 
-    <ChatInput />
-  </div>
+      <main className={styles.main}>
+        {/* Video Background */}
+        <video 
+          src="/World.mp4"  
+          autoPlay 
+          muted 
+          loop 
+          className={styles.video}
+        />
+
+        {/* Main Content */}
+        <div className={styles.content}>
+          <h1 style={{ textAlign: 'center' }}>
+            Every person deserves a safe place to call home.
+          </h1>
+
+          {/* Buttons side-by-side */}
+          <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'center' }}>
+            <Link href="/find-shelter" style={{ textDecoration: 'none' }}>
+              <button style={{ padding: '1rem 2rem', fontSize: '1rem', cursor: 'pointer' }}>
+                Find Shelter
+              </button>
+            </Link>
+
+            <Link href="/get-help-now" style={{ textDecoration: 'none' }}>
+              <button style={{ padding: '1rem 2rem', fontSize: '1rem', cursor: 'pointer' }}>
+                Get Help
+              </button>
+            </Link>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
