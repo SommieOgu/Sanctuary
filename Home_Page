@@ -1,0 +1,15 @@
+import Image from "next/image";
+import styles from "./page.module.css";
+import ChatInput from '@/components/ChatInput';
+
+
+export default function Home() {
+  return (
+    <div style={{ padding: "20px" }}>
+    <h1>Welcome to Sanctuary</h1>
+    <p>Find safety, resources, and help in times of crisis.</p>
+
+    <ChatInput />
+  </div>
+  );
+}
