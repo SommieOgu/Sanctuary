@@ -1,0 +1,106 @@
+error 
+
+
+import Head from 'next/head';
+import styles from './page.module.css'; // if you have other styles
+import Image from 'next/image';
+import Link from 'next/link';
+import FindServices from './FindServices';
+import get_help_now from './get_help_now';
+import Navbar from './Navbar';
+
+export default function Home() {
+  return (
+    <>
+      <Head>
+        {/* Google Font: Roboto */}
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" 
+          rel="stylesheet" 
+        />
+      </Head>
+      
+      <Navbar />
+
+      <main className={styles.main}>
+        {/* Video Background */}
+        <video 
+          src="/World.mp4"  
+          autoPlay 
+          muted 
+          loop 
+          className={styles.video}
+        />
+
+        {/* Main Content */}
+        <div className={styles.content}>
+          <h1 style={{ textAlign: 'center' }}>
+            Every person deserves a safe place to call home.
+          </h1>
+
+          {/* Buttons side-by-side */}
+          <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'center' }}>
+            <Link href="/FindServices" style={{ textDecoration: 'none' }}>
+              <button style={{ padding: '1rem 2rem', fontSize: '1rem', cursor: 'pointer' }}>
+                Find Services
+              </button>
+            </Link>
+
+            <Link href="/get-help-now" style={{ textDecoration: 'none' }}>
+              <button style={{ padding: '1rem 2rem', fontSize: '1rem', cursor: 'pointer' }}>
+                Get Help
+              </button>
+            </Link>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+}
+
+
+
+
+
+Get-help
+"use client";
+
+import Navbar from './Navbar';
+export default function GetHelpNowPage() {
+  return (
+    <div>
+      <h1>Get Help Now</h1>
+      <p>If you're in immediate danger, contact emergency services or reach out for support.</p>
+
+      <button
+        style={{
+          backgroundColor: "red",
+          color: "white",
+          padding: "15px 30px",
+          fontSize: "20px",
+          marginTop: "20px",
+          border: "none",
+          borderRadius: "8px",
+          cursor: "pointer",
+        }}
+        onClick={() => alert("Call 911 or reach out to a nearby shelter immediately.")}
+      >
+      I Need Help Now
+      </button>
+
+      <div style={{ marginTop: "40px" }}>
+        <h2>Emergency Contacts</h2>
+        <ul>
+          <li>National Domestic Violence Hotline: 1-800-799-7233</li>
+          <li>Suicide Prevention Lifeline: 988</li>
+          <li>Substance Abuse Hotline: 1-800-662-4357</li>
+        </ul>
+      </div>
+
+      <div style={{ marginTop: "40px" }}>
+        <h2>Download Help Kit</h2>
+        <p>(Feature coming soon: download a list of emergency shelters and numbers.)</p>
+      </div>
+    </div>
+  );
+}
