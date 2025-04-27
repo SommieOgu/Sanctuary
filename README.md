@@ -1,4 +1,5 @@
 #Elevator Pitch
+
 Sanctuary is a web app designed to provide a safe, supportive space for individuals experiencing domestic abuse. Using the power of Google AI, Sanctuary intelligently locates and recommends nearby shelters, helping users find safety as quickly and easily as possible. Whether you need shelter, support, or simply a moment of security, Sanctuary delivers real-time, accessible resources when you need them most.
 
 #What To Do
