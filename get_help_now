@@ -1,0 +1,38 @@
+export default function GetHelpNowPage() {
+  return (
+    <div>
+      <h1>Get Help Now</h1>
+      <p>If you're in immediate danger, contact emergency services or reach out for support.</p>
+
+      <button
+        style={{
+          backgroundColor: "red",
+          color: "white",
+          padding: "15px 30px",
+          fontSize: "20px",
+          marginTop: "20px",
+          border: "none",
+          borderRadius: "8px",
+          cursor: "pointer",
+        }}
+        onClick={() => alert("Call 911 or reach out to a nearby shelter immediately.")}
+      >
+      I Need Help Now
+      </button>
+
+      <div style={{ marginTop: "40px" }}>
+        <h2>Emergency Contacts</h2>
+        <ul>
+          <li>National Domestic Violence Hotline: 1-800-799-7233</li>
+          <li>Suicide Prevention Lifeline: 988</li>
+          <li>Substance Abuse Hotline: 1-800-662-4357</li>
+        </ul>
+      </div>
+
+      <div style={{ marginTop: "40px" }}>
+        <h2>Download Help Kit</h2>
+        <p>(Feature coming soon: download a list of emergency shelters and numbers.)</p>
+      </div>
+    </div>
+  );
+}
