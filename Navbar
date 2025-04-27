@@ -1,0 +1,146 @@
+'use client'; // Make this a client-side component
+
+import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
+
+export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Toggle the menu visibility
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+
+  return (
+    <nav style={{
+      display: 'flex',
+      justifyContent: 'space-between',  // This ensures space is between items
+      alignItems: 'center',
+      padding: '2rem 2rem',
+      backgroundColor: '#000',
+      color: '#fff',
+      position: 'relative',
+    }}>
+      {/* Menu Button on the Left */}
+      <button 
+        style={{
+          backgroundColor: 'transparent',
+          border: 'none',
+          color: 'white',
+          fontSize: '1.2rem',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          position: 'absolute',  // Fixed position on the left
+          left: '20px',
+          top: '50%',  // Vertically center it
+          transform: 'translateY(-50%)',
+        }}
+        onClick={toggleMenu} // Toggle menu on click
+      >
+        <Image 
+          src="/mm.png"    // menu icon
+          width={50}
+          height={30}
+          alt="Menu"
+        />
+        Menu
+      </button>
+
+      {/* Site Name + Second Logo (Center Logo) */}
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '0.5rem', 
+        position: 'absolute',  // Ensures the logo is centered
+        left: '50%', 
+        transform: 'translateX(-50%)',
+      }}>
+        <Image 
+          src="/rr2.png"    // rr.png in public/
+          alt="Logo"
+          width={200}
+          height={60}
+        />
+      </div>
+
+      {/* Logos Section on the Right */}
+      <div style={{
+        display: 'flex',  // Flex container to align logos side by side
+        gap: '1rem',     // Space between logos
+        position: 'absolute', // Position logos on the right side
+        right: '20px',   // Align the logos to the right
+      }}>
+        <div>
+          <Image 
+            src="/lo.png"   
+            width={40}
+            height={40}
+            alt="Logo"
+          />
+        </div>
+        <div>
+          <Image 
+            src="/ll.png"   
+            width={40}
+            height={40}
+            alt="Small Logo"
+          />
+        </div>
+      </div>
+
+      {/* Sidebar - Conditional Rendering */}
+      {isMenuOpen && (
+        <div style={{
+          width: "220px",
+          background: "#204969",
+          color: "white",
+          height: "100vh",
+          padding: "20px",
+          position: "fixed",
+          top: 0,
+          left: 0,  // Ensure the sidebar is positioned on the left side
+          transform: isMenuOpen ? 'translateX(0)' : 'translateX(-100%)',  // Slide-in effect
+          transition: 'transform 0.3s ease-in-out',  // Smooth transition for sliding in
+        }}>
+            <button 
+            onClick={closeMenu}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'white',
+              fontSize: '1.5rem',
+              cursor: 'pointer',
+              marginBottom: '20px',
+              alignSelf: 'flex-end',
+            }}
+          >
+            &times; {/* HTML Entity for "×" */}
+          </button>
+
+          <h2>Sanctuary</h2>
+         
+          <nav>
+            <ul style={{ listStyle: "none", padding: 1 }}>
+              <li style={{ marginBottom: "20px" }}>
+                <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
+              </li>
+              <li style={{ marginBottom: "20px" }}>
+                <Link href="/find-shelter" style={{ color: 'white', textDecoration: 'none' }}>Find Shelter</Link>
+              </li>
+              <li style={{ marginBottom: "20px" }}>
+                <Link href="/get-help-now" style={{ color: 'white', textDecoration: 'none' }}>Get Help Now</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      )}
+    </nav>
+  );
+}
