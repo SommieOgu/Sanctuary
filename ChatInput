@@ -20,6 +20,13 @@ export default function ChatInput() {
     setMessage('');
   }
 
+  // 🔥 NEW function to handle keyboard input
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  }
+
   return (
     <div>
       <h2>Ask Sanctuary AI</h2>
@@ -28,6 +35,7 @@ export default function ChatInput() {
         placeholder="Type your question..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={handleKeyDown} // 🔥 Listen for Enter key
         style={{ width: '300px', padding: '10px', marginRight: '10px' }}
       />
       <button onClick={sendMessage} style={{ padding: '10px 20px' }}>
@@ -35,7 +43,13 @@ export default function ChatInput() {
       </button>
 
       {reply && (
-        <div style={{ marginTop: '20px', background: '#eee', padding: '10px', borderRadius: '5px' }}>
+        <div style={{ 
+          marginTop: '20px', 
+          background: '#eee', 
+          padding: '10px', 
+          borderRadius: '5px',
+          color: 'black'
+        }}>
           <strong>Sanctuary AI says:</strong>
           <p>{reply}</p>
         </div>
