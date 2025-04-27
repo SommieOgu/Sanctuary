@@ -1,39 +1,62 @@
 "use client";
 
+import Navbar from "../Navbar"; // make sure your Navbar component is in the right path!
+
 export default function GetHelpNowPage() {
+  const handleHelpClick = () => {
+    alert("Call 911 or reach out to a nearby shelter immediately.");
+  };
+
   return (
     <div>
-      <h1>Get Help Now</h1>
-      <p>If you're in immediate danger, contact emergency services or reach out for support.</p>
+      {/* Navbar at the top */}
+      <Navbar />
 
-      <button
+      {/* Centered Page Content */}
+      <div
         style={{
-          backgroundColor: "red",
-          color: "white",
-          padding: "15px 30px",
-          fontSize: "20px",
-          marginTop: "20px",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
+          minHeight: "calc(100vh - 80px)", // adjusts for Navbar height if needed
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "2rem",
+          textAlign: "center",
         }}
-        onClick={() => alert("Call 911 or reach out to a nearby shelter immediately.")}
       >
-      I Need Help Now
-      </button>
+        <h1>Get Help Now</h1>
+        <p>If you're in immediate danger, contact emergency services or reach out for support.</p>
 
-      <div style={{ marginTop: "40px" }}>
-        <h2>Emergency Contacts</h2>
-        <ul>
-          <li>National Domestic Violence Hotline: 1-800-799-7233</li>
-          <li>Suicide Prevention Lifeline: 988</li>
-          <li>Substance Abuse Hotline: 1-800-662-4357</li>
-        </ul>
-      </div>
+        <button
+          style={{
+            backgroundColor: "red",
+            color: "white",
+            padding: "15px 30px",
+            fontSize: "20px",
+            marginTop: "20px",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+          onClick={handleHelpClick}
+          aria-label="Get immediate help"
+        >
+          I Need Help Now
+        </button>
 
-      <div style={{ marginTop: "40px" }}>
-        <h2>Download Help Kit</h2>
-        <p>(Feature coming soon: download a list of emergency shelters and numbers.)</p>
+        <section style={{ marginTop: "40px" }}>
+          <h2>Emergency Contacts</h2>
+          <ul style={{ listStyle: "none", padding: 0 }}>
+            <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233</li>
+            <li><strong>Suicide Prevention Lifeline:</strong> 988</li>
+            <li><strong>Substance Abuse Hotline:</strong> 1-800-662-4357</li>
+          </ul>
+        </section>
+
+        <section style={{ marginTop: "40px" }}>
+          <h2>Download Help Kit</h2>
+          <p>(Feature coming soon: download a list of emergency shelters and numbers.)</p>
+        </section>
       </div>
     </div>
   );
