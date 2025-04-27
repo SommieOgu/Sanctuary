@@ -1,3 +1,4 @@
+"use client";
 import { GoogleGenAI } from "@google/genai";
 
 // Initialize GoogleGenerativeAI instance
@@ -170,7 +171,7 @@ export const getServiceInfo = async (userInput: string) => {
       
       // Keep original API call method
       const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash", // Using Gemini 2.5
+        model: "gemini-2.0-flash", // Using Gemini 2.0 Flash
         contents: promptWithLocation,
       });
       
@@ -299,8 +300,16 @@ export const getServiceInfo = async (userInput: string) => {
       };
     } catch (error) {
       console.error("Error generating response:", error);
+      
+      // Enhanced error message
+      let errorMessage = "Sorry, I couldn't get the information right now. Please try again later.";
+      
+      if (error && typeof error === 'object' && 'message' in error) {
+        console.error("Error details:", (error as Error).message);
+      }
+      
       return {
-        text: "Sorry, I couldn't get the information right now. Please try again later.",
+        text: errorMessage,
         services: services,  // Return predefined services if there's an error
       };
     }
